@@ -23,5 +23,9 @@ Route::prefix('v1/')->group(function () {
     //Routes with auth
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', 'App\Http\Controllers\Api\v1\AuthController@logout');
+        Route::prefix('admin')->group(function () {
+
+            Route::apiResource('/categories', 'App\Http\Controllers\Api\v1\CategoryController');
+        });
     });
 });
