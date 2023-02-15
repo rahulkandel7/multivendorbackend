@@ -35,6 +35,7 @@ class RegisterRequest extends FormRequest
             'office_number' => 'required|string|max:255',
             'password' => 'required|string|same:confirm_password|min:8',
             'confirm_password' => 'required|string|min:8',
+            'role' => 'required|string|max:255|in:wholeseller,distributor',
         ];
     }
 
