@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCategoryRequest;
+use App\Http\Resources\SubCategoryResource;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 
@@ -17,12 +18,9 @@ class SubCategoryController extends Controller
     public function index()
     {
         $data = SubCategory::all();
-        foreach ($data as $subCategory) {
-            $subCategory->category_name = $subCategory->category->category_name;
-        }
         return response()->json([
             'message' => 'Sub Category List',
-            'data' => $data,
+            'data' => SubCategoryResource::collection($data),
             'status' => true,
         ], 200);
     }
