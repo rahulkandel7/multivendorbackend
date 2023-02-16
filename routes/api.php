@@ -26,6 +26,7 @@ Route::prefix('v1/')->group(function () {
         Route::prefix('admin')->group(function () {
 
             Route::apiResource('/categories', 'App\Http\Controllers\Api\v1\CategoryController');
+            Route::apiResource('/sub-categories', 'App\Http\Controllers\Api\v1\SubCategoryController');
         });
     });
 });
