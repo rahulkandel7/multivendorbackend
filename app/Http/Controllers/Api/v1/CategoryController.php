@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -73,20 +74,27 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $category)
+    public function update(CategoryRequest $request,  $id)
     {
         $data = $request->all();
+        $category = Category::find($id);
 
         if ($data['category_photo'] != '') {
             if ($request->has('category_photo')) {
                 $fname = time();
                 $fexe = $request->file('category_photo')->extension();
                 $fpath = "$fname.$fexe";
-
+                if ($category->category_photo) {
+                    File::delete('public/' . $category->category_photo);
+                }
                 $request->file('category_photo')->move(public_path() . '/public/categories/', $fpath);
 
                 $data['category_photo'] = 'categories/' . $fpath;
             }
+        }
+
+        if ($data['category_photo'] == '') {
+            $data['category_photo'] = $category->category_photo;
         }
 
         $category->update($data);
@@ -105,6 +113,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        File::delete('public/' . $category->photopath);
         $category->delete();
 
         return response()->json([
