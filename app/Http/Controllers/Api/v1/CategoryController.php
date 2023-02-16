@@ -113,7 +113,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        File::delete('public/' . $category->photopath);
+        File::delete('public/' . $category->category_photo);
         $category->delete();
 
         return response()->json([
