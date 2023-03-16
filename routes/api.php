@@ -24,10 +24,12 @@ Route::prefix('v1/')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', 'App\Http\Controllers\Api\v1\AuthController@logout');
         Route::prefix('admin')->group(function () {
-
             Route::apiResource('/categories', 'App\Http\Controllers\Api\v1\CategoryController');
             Route::apiResource('/sub-categories', 'App\Http\Controllers\Api\v1\SubCategoryController');
             Route::apiResource('/slideshows', 'App\Http\Controllers\Api\v1\SlideshowController');
+        });
+        Route::prefix('distributor')->group(function () {
+            Route::apiResource('/products', 'App\Http\Controllers\Api\v1\ProductController');
         });
     });
 });
